@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+{%load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/account_settings.css' %}">
+    
+   
+    <title>Account Settings Page</title>
+   
+
+</head>
+<body>
+    {% include 'crud/navbar.html' %}   
+
+    <div class="container mt-1">
+        <h3 class="alert alert-secondary text-center">Account-Settings</h3>
+        <div class="row">
+            <div class="col-lg-4 pb-5">
+                <!-- Account Sidebar-->
+                <div class="author-card pb-3">
+                    <div class="author-card-cover" style="background-image: url({{request.user.profile.cover.url}});"></div>
+                    <div class="author-card-profile">
+                        <div class="author-card-avatar"><img src="{{request.user.profile.pro_image.url}}" alt="Daniel Adams">
+                        
+                        </div>
+                        <div class="author-card-details mt-4">
+                            <h4 class="author-card-name text-capitalize mb-2">{{request.user.get_full_name}}</h4><span class="author-card-position">Joined {{request.user.date_joined}}</span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="wizard">
+                    <nav class="list-group list-group-flush">
+                        <a class="list-group-item" href="{% url 'user-profile' request.user.id %}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div><i class="fe-icon-shopping-bag mr-1 text-muted"></i>
+                                    <div class="d-inline-block font-weight-medium text-uppercase">Profile</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="list-group-item" href="{% url 'photos-gallary' %}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div><i class="fe-icon-shopping-bag mr-1 text-muted"></i>
+                                    <div class="d-inline-block font-weight-medium text-uppercase">Photo Gallary</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div><i class="fe-icon-shopping-bag mr-1 text-muted"></i>
+                                    <div class="d-inline-block font-weight-medium text-uppercase">Followers</div>
+                                </div><span class="badge badge-info">6</span>
+                            </div>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div><i class="fe-icon-shopping-bag mr-1 text-muted"></i>
+                                    <div class="d-inline-block font-weight-medium text-uppercase">Following</div>
+                                </div><span class="badge badge-info">6</span>
+                            </div>
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div><i class="fe-icon-heart mr-1 text-muted"></i>
+                                    <div class="d-inline-block font-weight-medium text-uppercase">Account-Settings</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a class="list-group-item" href="{% url 'password-change' %}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div><i class="fe-icon-tag mr-1 text-muted"></i>
+                                    <div class="d-inline-block font-weight-medium text-uppercase">Password Change</div>
+                                </div>
+                            </div>
+                        </a>
+                       
+            
+                    </nav>
+                </div>
+            </div>
+            <!-- Profile Settings-->
+            <div class="col-lg-8 pb-5">
+                <form class="row" method="POST" enctype="multipart/form-data">
+                   {%csrf_token%}
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="account-phone">User Name</label>
+                            {{user_form.username}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-fn">First Name</label>
+                            {{user_form.first_name}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-ln">Last Name</label>
+                            {{user_form.last_name}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-email">E-mail Address</label>
+                            {{user_form.email}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-phone">Date Of Birth</label>
+                            {{profile_form.birthday}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-works">works</label>
+                            {{profile_form.works}}
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="account-education">Education</label>
+                            {{profile_form.education}}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="account-pass">Profile Image</label>
+                            {{profile_form.pro_image}}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="account-pass">Cover</label>
+                            {{profile_form.cover}}
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="account-pass">Photos</label>
+                            {{profile_form.photo_gallary}}
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="account-confirm-pass">Bio</label>
+                            {{profile_form.bio}}
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <hr class="mt-2 mb-3">
+                        <div class="d-flex flex-wrap justify-content-start align-items-center">
+                            
+                            <input type="submit" class="btn btn-outline-info px-5" value="Update Info">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- <form action="">
+        {{user_form}}
+        {{profile_form}}
+    </form> -->
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<scrip src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></scrip>  
+
+
+
+</body>
+</html>
